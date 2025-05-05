@@ -1,0 +1,157 @@
+<style>
+.video-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  padding: 80px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.video-hero-section video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.video-desktop {
+  display: block;
+}
+
+.video-mobile {
+  display: none;
+}
+
+.video-overlay {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-size: 2.5rem;
+  font-family: serif;
+}
+
+@media (max-width: 768px) {
+  .video-desktop {
+    display: none;
+  }
+
+  .video-mobile {
+    display: block;
+  }
+
+  .video-hero-section {
+    padding: 40px 20px;
+  }
+
+  .video-overlay {
+    font-size: 1.6rem;
+  }
+}
+</style>
+
+<section class="video-hero-section">
+  <!-- Desktop Video -->
+  <video
+    class="video-desktop"
+    {% if section.settings.autoplay %}autoplay{% endif %}
+    {% if section.settings.loop %}loop{% endif %}
+    {% if section.settings.muted %}muted{% endif %}
+    {% if section.settings.controls %}controls{% endif %}
+    playsinline
+    poster="{{ section.settings.poster_desktop | image_url }}"
+  >
+    <source src="{{ section.settings.video_desktop }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Mobile Video -->
+  <video
+    class="video-mobile"
+    {% if section.settings.autoplay %}autoplay{% endif %}
+    {% if section.settings.loop %}loop{% endif %}
+    {% if section.settings.muted %}muted{% endif %}
+    {% if section.settings.controls %}controls{% endif %}
+    playsinline
+    poster="{{ section.settings.poster_mobile | image_url }}"
+  >
+    <source src="{{ section.settings.video_mobile }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay Text -->
+  <div class="video-overlay">
+    <h1>{{ section.settings.heading | newline_to_br }}</h1>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Responsive Video Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A Beautiful Place,\nA Timeless Wine."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_desktop",
+      "label": "Desktop Poster Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_mobile",
+      "label": "Mobile Poster Image"
+    },
+    {
+      "type": "url",
+      "id": "video_desktop",
+      "label": "Desktop Video URL"
+    },
+    {
+      "type": "url",
+      "id": "video_mobile",
+      "label": "Mobile Video URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "muted",
+      "label": "Muted",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "controls",
+      "label": "Show Video Controls",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Responsive Video Hero",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
