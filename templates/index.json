@@ -21,7 +21,7 @@
         "autoplay": true,
         "loop": true,
         "muted": true,
-        "controls": false
+        "controls": true
       }
     },
     "image_banner": {
